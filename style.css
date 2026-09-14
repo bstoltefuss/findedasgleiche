@@ -18,22 +18,22 @@ body {
   overflow: hidden;
 }
 
-/* Flexibles Layout: Auf Smartphones & iPads groß, auf PC-Bildschirmen gedeckelt */
+/* Optimierte Max-Breite & Padding für perfekte Passform auf iPads */
 .game-container {
   width: 100%;
-  max-width: 680px; /* Perfekte Obergrenze für PC-Monitore */
-  padding: 20px;
+  max-width: min(580px, 80vh);
+  padding: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Strikte 2x2 Matrix – verhindert das Untereinanderrutschen */
+/* Strikte 2x2 Matrix */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 20px;
+  gap: 16px;
   width: 100%;
 }
 
@@ -48,7 +48,7 @@ body {
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
   touch-action: none;
-  padding: 16px;
+  padding: 12px;
 }
 
 .card.selected {
