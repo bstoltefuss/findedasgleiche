@@ -1,4 +1,3 @@
-// Konfiguration & Erlaubte Farben
 const COLORS = {
   red: '#EF4444',
   yellow: '#EAB308',
@@ -226,29 +225,25 @@ function checkMatch(index1, index2) {
   }
 }
 
-// Erzeugt den Sternenregen
 function showSuccessFeedback() {
   const cards = document.querySelectorAll('.card');
   const rainContainer = document.getElementById('stars-rain-container');
 
   cards.forEach(card => card.classList.add('fade-out'));
 
-  // Container leeren & anzeigen
   rainContainer.innerHTML = '';
   rainContainer.classList.remove('hidden');
 
-  // 35 Sterne erzeugen
   const starIcons = ['⭐', '🌟', '✨'];
   for (let i = 0; i < 35; i++) {
     const star = document.createElement('div');
     star.className = 'falling-star';
     star.textContent = starIcons[Math.floor(Math.random() * starIcons.length)];
 
-    // Zufällige horizontale Position, Fallgeschwindigkeit und Start-Verzögerung
     const leftPos = Math.random() * 100;
-    const duration = 1.2 + Math.random() * 1.0; // zwischen 1.2s und 2.2s
-    const delay = Math.random() * 0.5; // verstreuter Start
-    const size = 1.8 + Math.random() * 1.8; // variierende Größe
+    const duration = 1.2 + Math.random() * 1.0;
+    const delay = Math.random() * 0.5;
+    const size = 1.8 + Math.random() * 1.8;
 
     star.style.left = `${leftPos}vw`;
     star.style.animationDuration = `${duration}s`;
@@ -258,7 +253,6 @@ function showSuccessFeedback() {
     rainContainer.appendChild(star);
   }
 
-  // Nach Abschluss der Animation neue Aufgabe laden
   setTimeout(() => {
     rainContainer.classList.add('hidden');
     rainContainer.innerHTML = '';
