@@ -62,9 +62,13 @@ function randomizeOrder(combo) {
 }
 
 function areCombosEqual(comboA, comboB) {
-  const sortedA = [...comboA].sort();
-  const sortedB = [...comboB].sort();
-  return sortedA[0] === sortedB[0] && sortedA[1] === sortedB[1];
+  if (!comboA || !comboB || comboA.length !== 2 || comboB.length !== 2) {
+    return false;
+  }
+
+  const sameOrder = comboA[0] === comboB[0] && comboA[1] === comboB[1];
+  const reverseOrder = comboA[0] === comboB[1] && comboA[1] === comboB[0];
+  return sameOrder || reverseOrder;
 }
 
 function shuffleArray(array) {
