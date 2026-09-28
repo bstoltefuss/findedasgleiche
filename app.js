@@ -148,7 +148,6 @@ function handlePointerDown(e) {
   touchStartY = e.clientY;
 
   activeDragCard.style.pointerEvents = 'none';
-  activeDragCard.style.visibility = 'hidden';
 
   document.querySelectorAll('.card').forEach(card => {
     if (card !== activeDragCard) {
