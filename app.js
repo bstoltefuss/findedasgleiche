@@ -31,6 +31,7 @@ function initGame() {
     card.classList.remove('fade-out', 'selected', 'drop-target');
     card.style.transform = '';
     card.style.pointerEvents = 'auto';
+    card.style.visibility = 'visible';
   });
 
   generateTask();
@@ -146,6 +147,9 @@ function handlePointerDown(e) {
   touchStartX = e.clientX;
   touchStartY = e.clientY;
 
+  activeDragCard.style.pointerEvents = 'none';
+  activeDragCard.style.visibility = 'hidden';
+
   document.querySelectorAll('.card').forEach(card => {
     if (card !== activeDragCard) {
       card.style.pointerEvents = 'none';
@@ -159,6 +163,7 @@ function handlePointerDown(e) {
   dragClone.style.height = `${cardRect.height}px`;
   dragClone.style.left = `${cardRect.left}px`;
   dragClone.style.top = `${cardRect.top}px`;
+  dragClone.style.pointerEvents = 'none';
   document.body.appendChild(dragClone);
 
   window.addEventListener('pointermove', handlePointerMove);
@@ -181,7 +186,7 @@ function handlePointerMove(e) {
   const targetCard = elementBelow ? elementBelow.closest('.card') : null;
 
   document.querySelectorAll('.card').forEach(card => card.classList.remove('drop-target'));
-  if (targetCard && targetCard !== activeDragCard) {
+  if (targetCard && targetCard !== activeDragCard && targetCard !== dragClone) {
     targetCard.classList.add('drop-target');
   }
 }
@@ -223,10 +228,15 @@ function finishDrag(e, evaluateDrop) {
   });
 
   const draggedCard = activeDragCard;
+  if (draggedCard) {
+    draggedCard.style.pointerEvents = 'auto';
+    draggedCard.style.visibility = 'visible';
+  }
+
   const fromIndex = Number(draggedCard.dataset.index);
   const moveDist = Math.hypot(e.clientX - touchStartX, e.clientY - touchStartY);
 
-  if (evaluateDrop && targetCard && targetCard !== draggedCard && moveDist > 10) {
+  if (evaluateDrop && targetCard && targetCard !== draggedCard && targetCard !== dragClone && moveDist > 10) {
     const toIndex = Number(targetCard.dataset.index);
     checkMatch(fromIndex, toIndex);
   } else if (evaluateDrop && moveDist <= 10) {
@@ -257,6 +267,10 @@ function handleTap(card) {
 }
 
 function checkMatch(index1, index2) {
+  if (index1 === index2) {
+    return;
+  }
+
   const combo1 = currentCardsData[index1];
   const combo2 = currentCardsData[index2];
 
